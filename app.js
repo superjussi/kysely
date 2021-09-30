@@ -254,10 +254,10 @@
               $async$temp1 = J;
               $async$temp2 = C.C_JsonCodec;
               $async$goto = 2;
-              return P._asyncAwait(W.HttpRequest_getString("kysymykset.json"), $async$main);
+              return P._asyncAwait(W.HttpRequest_getString("https://opentdb.com/api.php?amount=10"), $async$main);
             case 2:
               // returning from await.
-              kysymykset = $async$temp1.$index$asx($async$temp2.decode$2$reviver(0, $async$result, null), "kysymykset");
+              kysymykset = $async$temp1.$index$asx($async$temp2.decode$2$reviver(0, $async$result, null), "results");
               t1 = J.get$onClick$x(document.querySelector("#seuraava"));
               t2 = t1.$ti;
               t3 = t2._eval$1("~(1)?")._as(new F.main_closure(kysymykset));
@@ -270,20 +270,28 @@
       return P._asyncStartSync($async$main, $async$completer);
     },
     asetaVastausvaihtoehdot(vaihtoehdot) {
-      var t1, i, t2;
+      var t1, wronganswers, answers, t2, t3, i, t4;
       J.get$children$x(document.querySelector("#vastaukset")).clear$0(0);
-      t1 = J.getInterceptor$ax(vaihtoehdot);
-      t1.shuffle$0(vaihtoehdot);
+      t1 = J.getInterceptor$asx(vaihtoehdot);
+      wronganswers = t1.$index(vaihtoehdot, "incorrect_answers");
+      answers = [];
+      t2 = type$.legacy_String;
+      t3 = type$.dynamic;
+      answers.push(P.LinkedHashMap_LinkedHashMap$_literal(["teksti", t1.$index(vaihtoehdot, "correct_answer"), "oikein", true], t2, t3));
+      t1 = J.getInterceptor$asx(wronganswers);
       i = 0;
       while (true) {
-        t2 = H._asNumS(t1.get$length(vaihtoehdot));
-        if (typeof t2 !== "number")
-          return H.iae(t2);
-        if (!(i < t2))
+        t4 = H._asNumS(t1.get$length(wronganswers));
+        if (typeof t4 !== "number")
+          return H.iae(t4);
+        if (!(i < t4))
           break;
-        F.lisaaVastausvaihtoehto(t1.$index(vaihtoehdot, i));
+        answers.push(P.LinkedHashMap_LinkedHashMap$_literal(["teksti", t1.$index(wronganswers, i), "oikein", false], t2, t3));
         ++i;
       }
+      C.JSArray_methods.shuffle$0(answers);
+      for (i = 0; i < answers.length; ++i)
+        F.lisaaVastausvaihtoehto(answers[i]);
     },
     lisaaVastausvaihtoehto(vaihtoehto) {
       var t2, t3,
@@ -631,6 +639,16 @@
         return J.get$hashCode$(object);
       else
         return H.Primitives_objectHashCode(object);
+    },
+    fillLiteralMap(keyValuePairs, result) {
+      var index, index0, index1,
+        $length = keyValuePairs.length;
+      for (index = 0; index < $length; index = index1) {
+        index0 = index + 1;
+        index1 = index0 + 1;
+        result.$indexSet(0, keyValuePairs[index], keyValuePairs[index0]);
+      }
+      return result;
     },
     invokeClosure(closure, numberOfArguments, arg1, arg2, arg3, arg4) {
       type$.Function._as(closure);
@@ -1131,6 +1149,18 @@
     },
     _AssertionError: function _AssertionError(t0) {
       this.message = t0;
+    },
+    JsLinkedHashMap: function JsLinkedHashMap(t0) {
+      var _ = this;
+      _.__js_helper$_length = 0;
+      _._last = _._first = _.__js_helper$_rest = _._nums = _._strings = null;
+      _._modifications = 0;
+      _.$ti = t0;
+    },
+    LinkedHashMapCell: function LinkedHashMapCell(t0, t1) {
+      this.hashMapCellKey = t0;
+      this.hashMapCellValue = t1;
+      this._next = null;
     },
     LinkedHashMapKeyIterable: function LinkedHashMapKeyIterable(t0, t1) {
       this._map = t0;
@@ -3292,6 +3322,9 @@
       this.f = t1;
       this.T = t2;
     },
+    LinkedHashMap_LinkedHashMap$_literal(keyValuePairs, $K, $V) {
+      return $K._eval$1("@<0>")._bind$1($V)._eval$1("LinkedHashMap<1,2>")._as(H.fillLiteralMap(keyValuePairs, new H.JsLinkedHashMap($K._eval$1("@<0>")._bind$1($V)._eval$1("JsLinkedHashMap<1,2>"))));
+    },
     IterableBase_iterableToShortString(iterable, leftDelimiter, rightDelimiter) {
       var parts, t1;
       if (P._isToStringVisiting(iterable)) {
@@ -3985,9 +4018,7 @@
     },
     $index(receiver, index) {
       H._asIntS(index);
-      if (!H._isInt(index))
-        throw H.wrapException(H.diagnoseIndexError(receiver, index));
-      if (index >= receiver.length || index < 0)
+      if (index >= receiver.length || false)
         throw H.wrapException(H.diagnoseIndexError(receiver, index));
       return receiver[index];
     },
@@ -4208,6 +4239,141 @@
       return "Assertion failed: " + P.Error_safeToString(this.message);
     }
   };
+  H.JsLinkedHashMap.prototype = {
+    get$length(_) {
+      return this.__js_helper$_length;
+    },
+    get$keys() {
+      return new H.LinkedHashMapKeyIterable(this, H._instanceType(this)._eval$1("LinkedHashMapKeyIterable<1>"));
+    },
+    $index(_, key) {
+      var strings, cell, t1, nums, _this = this, _null = null;
+      if (typeof key == "string") {
+        strings = _this._strings;
+        if (strings == null)
+          return _null;
+        cell = _this._getTableCell$2(strings, key);
+        t1 = cell == null ? _null : cell.hashMapCellValue;
+        return t1;
+      } else if (typeof key == "number" && (key & 0x3ffffff) === key) {
+        nums = _this._nums;
+        if (nums == null)
+          return _null;
+        cell = _this._getTableCell$2(nums, key);
+        t1 = cell == null ? _null : cell.hashMapCellValue;
+        return t1;
+      } else
+        return _this.internalGet$1(key);
+    },
+    internalGet$1(key) {
+      var bucket, index,
+        rest = this.__js_helper$_rest;
+      if (rest == null)
+        return null;
+      bucket = this._getTableBucket$2(rest, J.get$hashCode$(key) & 0x3ffffff);
+      index = this.internalFindBucketIndex$2(bucket, key);
+      if (index < 0)
+        return null;
+      return bucket[index].hashMapCellValue;
+    },
+    $indexSet(_, key, value) {
+      var strings, nums, rest, hash, bucket, index, _this = this,
+        t1 = H._instanceType(_this);
+      t1._precomputed1._as(key);
+      t1._rest[1]._as(value);
+      if (typeof key == "string") {
+        strings = _this._strings;
+        _this._addHashTableEntry$3(strings == null ? _this._strings = _this._newHashTable$0() : strings, key, value);
+      } else if (typeof key == "number" && (key & 0x3ffffff) === key) {
+        nums = _this._nums;
+        _this._addHashTableEntry$3(nums == null ? _this._nums = _this._newHashTable$0() : nums, key, value);
+      } else {
+        rest = _this.__js_helper$_rest;
+        if (rest == null)
+          rest = _this.__js_helper$_rest = _this._newHashTable$0();
+        hash = J.get$hashCode$(key) & 0x3ffffff;
+        bucket = _this._getTableBucket$2(rest, hash);
+        if (bucket == null)
+          _this._setTableEntry$3(rest, hash, [_this._newLinkedCell$2(key, value)]);
+        else {
+          index = _this.internalFindBucketIndex$2(bucket, key);
+          if (index >= 0)
+            bucket[index].hashMapCellValue = value;
+          else
+            bucket.push(_this._newLinkedCell$2(key, value));
+        }
+      }
+    },
+    forEach$1(_, action) {
+      var cell, modifications, _this = this;
+      H._instanceType(_this)._eval$1("~(1,2)")._as(action);
+      cell = _this._first;
+      modifications = _this._modifications;
+      for (; cell != null;) {
+        action.call$2(cell.hashMapCellKey, cell.hashMapCellValue);
+        if (modifications !== _this._modifications)
+          throw H.wrapException(P.ConcurrentModificationError$(_this));
+        cell = cell._next;
+      }
+    },
+    _addHashTableEntry$3(table, key, value) {
+      var cell, _this = this,
+        t1 = H._instanceType(_this);
+      t1._precomputed1._as(key);
+      t1._rest[1]._as(value);
+      cell = _this._getTableCell$2(table, key);
+      if (cell == null)
+        _this._setTableEntry$3(table, key, _this._newLinkedCell$2(key, value));
+      else
+        cell.hashMapCellValue = value;
+    },
+    _newLinkedCell$2(key, value) {
+      var _this = this,
+        t1 = H._instanceType(_this),
+        cell = new H.LinkedHashMapCell(t1._precomputed1._as(key), t1._rest[1]._as(value));
+      if (_this._first == null)
+        _this._first = _this._last = cell;
+      else
+        _this._last = _this._last._next = cell;
+      ++_this.__js_helper$_length;
+      _this._modifications = _this._modifications + 1 & 67108863;
+      return cell;
+    },
+    internalFindBucketIndex$2(bucket, key) {
+      var $length, i;
+      if (bucket == null)
+        return -1;
+      $length = bucket.length;
+      for (i = 0; i < $length; ++i)
+        if (J.$eq$(bucket[i].hashMapCellKey, key))
+          return i;
+      return -1;
+    },
+    toString$0(_) {
+      return P.MapBase_mapToString(this);
+    },
+    _getTableCell$2(table, key) {
+      return table[key];
+    },
+    _getTableBucket$2(table, key) {
+      return table[key];
+    },
+    _setTableEntry$3(table, key, value) {
+      table[key] = value;
+    },
+    _deleteTableEntry$2(table, key) {
+      delete table[key];
+    },
+    _newHashTable$0() {
+      var _s20_ = "<non-identifier-key>",
+        table = Object.create(null);
+      this._setTableEntry$3(table, _s20_, table);
+      this._deleteTableEntry$2(table, _s20_);
+      return table;
+    },
+    $isLinkedHashMap: 1
+  };
+  H.LinkedHashMapCell.prototype = {};
   H.LinkedHashMapKeyIterable.prototype = {
     get$length(_) {
       return this._map.__js_helper$_length;
@@ -5564,16 +5730,15 @@
   };
   F.main_closure.prototype = {
     call$1(e) {
-      var t1, t2, t3;
+      var t1, t2;
       type$.legacy_MouseEvent._as(e);
       t1 = this.kysymykset;
       t2 = J.getInterceptor$ax(t1);
       t2.shuffle$0(t1);
       t1 = t2.$index(t1, 0);
-      t2 = J.getInterceptor$asx(t1);
-      t3 = t2.$index(t1, "teksti");
-      J.set$text$x(document.querySelector("#kysymys"), H._asStringS(t3));
-      F.asetaVastausvaihtoehdot(t2.$index(t1, "vaihtoehdot"));
+      t2 = J.$index$asx(t1, "question");
+      J.set$text$x(document.querySelector("#kysymys"), H._asStringS(t2));
+      F.asetaVastausvaihtoehdot(t1);
     },
     $signature: 4
   };
@@ -5583,9 +5748,9 @@
       type$.legacy_MouseEvent._as(e);
       t1 = this.elementti;
       if (H.boolConversionCheck(H._asBoolS(J.$index$asx(this.vaihtoehto, "oikein"))))
-        C.DivElement_methods.set$text(t1, "r\xe4tt!");
+        C.DivElement_methods.set$text(t1, "oikein!");
       else
-        C.DivElement_methods.set$text(t1, "fel!");
+        C.DivElement_methods.set$text(t1, "v\xe4\xe4rin!");
     },
     $signature: 4
   };
@@ -5610,7 +5775,7 @@
       _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(P.Object, null);
-    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Error, P.Iterable, H.ListIterator, P.Iterator, H.TypeErrorDecoder, H.NullThrownFromJavaScriptException, H.ExceptionAndStackTrace, H._StackTrace, H.Closure, H.LinkedHashMapKeyIterator, H.Rti, H._FunctionParameters, H._Type, P._TimerImpl, P._AsyncAwaitCompleter, P.AsyncError, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.Stream, P.StreamSubscription, P.StreamTransformerBase, P._StreamIterator, P._Zone, P._ListBase_Object_ListMixin, P.ListMixin, P.MapMixin, P.Codec, P.StackOverflowError, P._Exception, P.FormatException, P.Null, P._StringStackTrace, P.StringBuffer, W.EventStreamProvider, W.ImmutableListMixin, W.FixedSizeListIterator, P._JSRandom]);
+    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Error, P.Iterable, H.ListIterator, P.Iterator, H.TypeErrorDecoder, H.NullThrownFromJavaScriptException, H.ExceptionAndStackTrace, H._StackTrace, H.Closure, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.Rti, H._FunctionParameters, H._Type, P._TimerImpl, P._AsyncAwaitCompleter, P.AsyncError, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.Stream, P.StreamSubscription, P.StreamTransformerBase, P._StreamIterator, P._Zone, P._ListBase_Object_ListMixin, P.ListMixin, P.Codec, P.StackOverflowError, P._Exception, P.FormatException, P.Null, P._StringStackTrace, P.StringBuffer, W.EventStreamProvider, W.ImmutableListMixin, W.FixedSizeListIterator, P._JSRandom]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JSArray, J.JSNumber, J.JSString, W.EventTarget, W.DomException, W.Event, W._HtmlCollection_Interceptor_ListMixin, W._NodeList_Interceptor_ListMixin]);
     _inheritMany(J.JavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction]);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
@@ -5623,14 +5788,14 @@
     _inheritMany(H.Closure, [H.Closure0Args, H.Closure2Args, H.TearOffClosure, H.initHooks_closure, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._awaitOnObject_closure, P._Future__chainForeignFuture_closure, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P.Stream_length_closure, P._RootZone_bindUnaryCallbackGuarded_closure, W.HttpRequest_getString_closure, W.HttpRequest_request_closure, W._EventStreamSubscription_closure, P.FilteredElementList__iterable_closure, P.FilteredElementList__iterable_closure0, F.main_closure, F.lisaaVastausvaihtoehto_closure]);
     _inheritMany(H.TearOffClosure, [H.StaticClosure, H.BoundClosure]);
     _inherit(H._AssertionError, P.AssertionError);
+    _inherit(P.MapBase, P.MapMixin);
+    _inheritMany(P.MapBase, [H.JsLinkedHashMap, P._JsonMap]);
     _inheritMany(H.Closure2Args, [H.initHooks_closure0, P._awaitOnObject_closure0, P._wrapJsFunctionForAsync_closure, P._Future__chainForeignFuture_closure0, P.MapBase_mapToString_closure]);
     _inherit(H._TypeError, H._Error);
     _inheritMany(H.Closure0Args, [P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure1, P._Future__asyncCompleteWithValue_closure, P._Future__chainFuture_closure, P._Future__asyncCompleteError_closure, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure0, P._rootHandleError_closure, P._RootZone_bindCallbackGuarded_closure]);
     _inherit(P._AsyncCompleter, P._Completer);
     _inherit(P._RootZone, P._Zone);
     _inherit(P.ListBase, P._ListBase_Object_ListMixin);
-    _inherit(P.MapBase, P.MapMixin);
-    _inherit(P._JsonMap, P.MapBase);
     _inherit(P._JsonMapKeyIterable, H.ListIterable);
     _inherit(P.Converter, P.StreamTransformerBase);
     _inherit(P.JsonCodec, P.Codec);
@@ -5666,7 +5831,7 @@
     leafTags: null,
     arrayRti: Symbol("$ti")
   };
-  H._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"JavaScriptObject","UnknownJavaScriptObject":"JavaScriptObject","JavaScriptFunction":"JavaScriptObject","AbortPaymentEvent":"Event","ExtendableEvent":"Event","AElement":"SvgElement","GraphicsElement":"SvgElement","_ResourceProgressEvent":"ProgressEvent","AudioElement":"HtmlElement","MediaElement":"HtmlElement","HtmlDocument":"Node","Document":"Node","PointerEvent":"MouseEvent","CompositionEvent":"UIEvent","CDataSection":"CharacterData","Text":"CharacterData","HtmlFormControlsCollection":"HtmlCollection","JSBool":{"bool":[]},"JSNull":{"Null":[]},"JSArray":{"List":["1"],"Iterable":["1"]},"JSUnmodifiableArray":{"JSArray":["1"],"List":["1"],"Iterable":["1"]},"ArrayIterator":{"Iterator":["1"]},"JSNumber":{"num":[]},"JSInt":{"int":[],"num":[]},"JSNumNotInt":{"num":[]},"JSString":{"String":[]},"LateError":{"Error":[]},"NotNullableError":{"TypeError":[],"Error":[]},"EfficientLengthIterable":{"Iterable":["1"]},"ListIterable":{"Iterable":["1"]},"ListIterator":{"Iterator":["1"]},"MappedIterable":{"Iterable":["2"]},"MappedIterator":{"Iterator":["2"]},"WhereIterable":{"Iterable":["1"]},"WhereIterator":{"Iterator":["1"]},"NullError":{"TypeError":[],"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"_StackTrace":{"StackTrace":[]},"Closure":{"Function":[]},"Closure0Args":{"Function":[]},"Closure2Args":{"Function":[]},"TearOffClosure":{"Function":[]},"StaticClosure":{"Function":[]},"BoundClosure":{"Function":[]},"RuntimeError":{"Error":[]},"_AssertionError":{"Error":[]},"LinkedHashMapKeyIterable":{"Iterable":["1"]},"LinkedHashMapKeyIterator":{"Iterator":["1"]},"_Error":{"Error":[]},"_TypeError":{"TypeError":[],"Error":[]},"_Future":{"Future":["1"]},"AsyncError":{"Error":[]},"_AsyncCompleter":{"_Completer":["1"]},"_Zone":{"Zone":[]},"_RootZone":{"_Zone":[],"Zone":[]},"ListBase":{"ListMixin":["1"],"List":["1"],"Iterable":["1"]},"MapBase":{"MapMixin":["1","2"]},"_JsonMap":{"MapMixin":["String","@"],"MapMixin.K":"String","MapMixin.V":"@"},"_JsonMapKeyIterable":{"ListIterable":["String"],"Iterable":["String"],"ListIterable.E":"String"},"JsonDecoder":{"Converter":["String","Object?"]},"int":{"num":[]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"NullThrownError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"StackOverflowError":{"Error":[]},"CyclicInitializationError":{"Error":[]},"_StringStackTrace":{"StackTrace":[]},"Element":{"Node":[],"EventTarget":[]},"HttpRequest":{"EventTarget":[]},"MouseEvent":{"Event":[]},"Node":{"EventTarget":[]},"ProgressEvent":{"Event":[]},"HtmlElement":{"Element":[],"Node":[],"EventTarget":[]},"AnchorElement":{"Element":[],"Node":[],"EventTarget":[]},"AreaElement":{"Element":[],"Node":[],"EventTarget":[]},"CharacterData":{"Node":[],"EventTarget":[]},"DivElement":{"Element":[],"Node":[],"EventTarget":[]},"_ChildrenElementList":{"ListMixin":["Element"],"List":["Element"],"Iterable":["Element"],"ListMixin.E":"Element"},"FormElement":{"Element":[],"Node":[],"EventTarget":[]},"HtmlCollection":{"ListMixin":["Node"],"ImmutableListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"Iterable":["Node"],"ListMixin.E":"Node","ImmutableListMixin.E":"Node"},"HttpRequestEventTarget":{"EventTarget":[]},"_ChildNodeListLazy":{"ListMixin":["Node"],"List":["Node"],"Iterable":["Node"],"ListMixin.E":"Node"},"NodeList":{"ListMixin":["Node"],"ImmutableListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"Iterable":["Node"],"ListMixin.E":"Node","ImmutableListMixin.E":"Node"},"SelectElement":{"Element":[],"Node":[],"EventTarget":[]},"UIEvent":{"Event":[]},"_EventStream":{"Stream":["1"]},"_ElementEventStreamImpl":{"_EventStream":["1"],"Stream":["1"]},"_EventStreamSubscription":{"StreamSubscription":["1"]},"FixedSizeListIterator":{"Iterator":["1"]},"FilteredElementList":{"ListMixin":["Element"],"List":["Element"],"Iterable":["Element"],"ListMixin.E":"Element"},"SvgElement":{"Element":[],"Node":[],"EventTarget":[]}}'));
+  H._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"JavaScriptObject","UnknownJavaScriptObject":"JavaScriptObject","JavaScriptFunction":"JavaScriptObject","AbortPaymentEvent":"Event","ExtendableEvent":"Event","AElement":"SvgElement","GraphicsElement":"SvgElement","_ResourceProgressEvent":"ProgressEvent","AudioElement":"HtmlElement","MediaElement":"HtmlElement","HtmlDocument":"Node","Document":"Node","PointerEvent":"MouseEvent","CompositionEvent":"UIEvent","CDataSection":"CharacterData","Text":"CharacterData","HtmlFormControlsCollection":"HtmlCollection","JSBool":{"bool":[]},"JSNull":{"Null":[]},"JSArray":{"List":["1"],"Iterable":["1"]},"JSUnmodifiableArray":{"JSArray":["1"],"List":["1"],"Iterable":["1"]},"ArrayIterator":{"Iterator":["1"]},"JSNumber":{"num":[]},"JSInt":{"int":[],"num":[]},"JSNumNotInt":{"num":[]},"JSString":{"String":[]},"LateError":{"Error":[]},"NotNullableError":{"TypeError":[],"Error":[]},"EfficientLengthIterable":{"Iterable":["1"]},"ListIterable":{"Iterable":["1"]},"ListIterator":{"Iterator":["1"]},"MappedIterable":{"Iterable":["2"]},"MappedIterator":{"Iterator":["2"]},"WhereIterable":{"Iterable":["1"]},"WhereIterator":{"Iterator":["1"]},"NullError":{"TypeError":[],"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"_StackTrace":{"StackTrace":[]},"Closure":{"Function":[]},"Closure0Args":{"Function":[]},"Closure2Args":{"Function":[]},"TearOffClosure":{"Function":[]},"StaticClosure":{"Function":[]},"BoundClosure":{"Function":[]},"RuntimeError":{"Error":[]},"_AssertionError":{"Error":[]},"JsLinkedHashMap":{"MapMixin":["1","2"],"LinkedHashMap":["1","2"],"MapMixin.K":"1","MapMixin.V":"2"},"LinkedHashMapKeyIterable":{"Iterable":["1"]},"LinkedHashMapKeyIterator":{"Iterator":["1"]},"_Error":{"Error":[]},"_TypeError":{"TypeError":[],"Error":[]},"_Future":{"Future":["1"]},"AsyncError":{"Error":[]},"_AsyncCompleter":{"_Completer":["1"]},"_Zone":{"Zone":[]},"_RootZone":{"_Zone":[],"Zone":[]},"ListBase":{"ListMixin":["1"],"List":["1"],"Iterable":["1"]},"MapBase":{"MapMixin":["1","2"]},"_JsonMap":{"MapMixin":["String","@"],"MapMixin.K":"String","MapMixin.V":"@"},"_JsonMapKeyIterable":{"ListIterable":["String"],"Iterable":["String"],"ListIterable.E":"String"},"JsonDecoder":{"Converter":["String","Object?"]},"int":{"num":[]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"NullThrownError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"StackOverflowError":{"Error":[]},"CyclicInitializationError":{"Error":[]},"_StringStackTrace":{"StackTrace":[]},"Element":{"Node":[],"EventTarget":[]},"HttpRequest":{"EventTarget":[]},"MouseEvent":{"Event":[]},"Node":{"EventTarget":[]},"ProgressEvent":{"Event":[]},"HtmlElement":{"Element":[],"Node":[],"EventTarget":[]},"AnchorElement":{"Element":[],"Node":[],"EventTarget":[]},"AreaElement":{"Element":[],"Node":[],"EventTarget":[]},"CharacterData":{"Node":[],"EventTarget":[]},"DivElement":{"Element":[],"Node":[],"EventTarget":[]},"_ChildrenElementList":{"ListMixin":["Element"],"List":["Element"],"Iterable":["Element"],"ListMixin.E":"Element"},"FormElement":{"Element":[],"Node":[],"EventTarget":[]},"HtmlCollection":{"ListMixin":["Node"],"ImmutableListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"Iterable":["Node"],"ListMixin.E":"Node","ImmutableListMixin.E":"Node"},"HttpRequestEventTarget":{"EventTarget":[]},"_ChildNodeListLazy":{"ListMixin":["Node"],"List":["Node"],"Iterable":["Node"],"ListMixin.E":"Node"},"NodeList":{"ListMixin":["Node"],"ImmutableListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"Iterable":["Node"],"ListMixin.E":"Node","ImmutableListMixin.E":"Node"},"SelectElement":{"Element":[],"Node":[],"EventTarget":[]},"UIEvent":{"Event":[]},"_EventStream":{"Stream":["1"]},"_ElementEventStreamImpl":{"_EventStream":["1"],"Stream":["1"]},"_EventStreamSubscription":{"StreamSubscription":["1"]},"FixedSizeListIterator":{"Iterator":["1"]},"FilteredElementList":{"ListMixin":["Element"],"List":["Element"],"Iterable":["Element"],"ListMixin.E":"Element"},"SvgElement":{"Element":[],"Node":[],"EventTarget":[]}}'));
   H._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"EfficientLengthIterable":1,"StreamTransformerBase":2,"ListBase":1,"MapBase":2,"_ListBase_Object_ListMixin":1,"Codec":2}'));
   var string$ = {
     Error_: "Error handler must accept one Object or one Object and a StackTrace as arguments, and return a value of the returned future's type"
@@ -5712,6 +5877,7 @@
       legacy_Never: findType("0&*"),
       legacy_Object: findType("Object*"),
       legacy_ProgressEvent: findType("ProgressEvent*"),
+      legacy_String: findType("String*"),
       nullable_Future_Null: findType("Future<Null>?"),
       nullable_List_dynamic: findType("List<@>?"),
       nullable_Object: findType("Object?"),
