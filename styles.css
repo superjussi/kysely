@@ -1,0 +1,12 @@
+body { background-color: snow; padding: 1rem;
+}
+#kysymys { background-color: lightgreen; border-radius: 15px; text-align: center; padding: 1rem; margin: 1rem;
+}
+.vaihtoehto { background-color: lightblue; border-radius: 15px; text-align: center; padding: 1rem; margin: 1rem;
+}
+.vaihtoehto:hover { background-color: lightskyblue;
+}
+#seuraava { padding: 1rem; margin: 1rem;
+}
+#nappi { text-align: center;
+}
