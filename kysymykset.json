@@ -16,19 +16,13 @@
             }]
         },
         {
-            "teksti": "kysymys 2",
+            "teksti": "Vem är coola förälderna",
             "vaihtoehdot": [{
-                "teksti": "kysymys 2 - vastaus 1",
-                "oikein": false
-            }, {
-                "teksti": "kysymys 2 - vastaus 2",
-                "oikein": false
-            }, {
-                "teksti": "kysymys 2 - vastaus 3",
-                "oikein": false
-            }, {
-                "teksti": "kysymys 2 - vastaus 4",
+                "teksti": "Mamma?",
                 "oikein": true
+            }, {
+                "teksti": "Pappa?",
+                "oikein": false
             }]
         }
     ]
