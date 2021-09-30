@@ -53,9 +53,9 @@ lisaaVastausvaihtoehto(vaihtoehto) {
   elementti.text = vaihtoehto['teksti'];
   elementti.onClick.listen((e) {
     if (vaihtoehto['oikein']) {
-      elementti.text = 'oikein!';
+      elementti.text = 'CORRECT!';
     } else {
-      elementti.text = 'väärin!';
+      elementti.text = 'WROOOONG!';
     }
   });
   querySelector('#vastaukset').children.add(elementti);
