@@ -1,17 +1,17 @@
 {
     "kysymykset": [{
-            "teksti": "kysymys 1",
+            "teksti": "Vem är bäst?",
             "vaihtoehdot": [{
-                "teksti": "kysymys 1 - vastaus 1",
+                "teksti": "Pappa?",
                 "oikein": true
             }, {
-                "teksti": "kysymys 1 - vastaus 2",
+                "teksti": "Hampus",
                 "oikein": false
             }, {
-                "teksti": "kysymys 1 - vastaus 3",
+                "teksti": "Sienna",
                 "oikein": false
             }, {
-                "teksti": "kysymys 1 - vastaus 4",
+                "teksti": "Mamma",
                 "oikein": false
             }]
         },
