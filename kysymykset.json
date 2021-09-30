@@ -1,0 +1,35 @@
+{
+    "kysymykset": [{
+            "teksti": "kysymys 1",
+            "vaihtoehdot": [{
+                "teksti": "kysymys 1 - vastaus 1",
+                "oikein": true
+            }, {
+                "teksti": "kysymys 1 - vastaus 2",
+                "oikein": false
+            }, {
+                "teksti": "kysymys 1 - vastaus 3",
+                "oikein": false
+            }, {
+                "teksti": "kysymys 1 - vastaus 4",
+                "oikein": false
+            }]
+        },
+        {
+            "teksti": "kysymys 2",
+            "vaihtoehdot": [{
+                "teksti": "kysymys 2 - vastaus 1",
+                "oikein": false
+            }, {
+                "teksti": "kysymys 2 - vastaus 2",
+                "oikein": false
+            }, {
+                "teksti": "kysymys 2 - vastaus 3",
+                "oikein": false
+            }, {
+                "teksti": "kysymys 2 - vastaus 4",
+                "oikein": true
+            }]
+        }
+    ]
+}
