@@ -3,32 +3,32 @@
             "teksti": "Vem är bäst?",
             "vaihtoehdot": [{
                 "teksti": "Pappa?",
-                "rätt": true
+                "oikein": true
             }, {
                 "teksti": "Hampus",
-                "rätt": false
+                "oikein": false
             }, {
                 "teksti": "Sienna",
-                "rätt": false
+                "oikein": false
             }, {
                 "teksti": "Mamma",
-                "rätt": false
+                "oikein": false
             }]
         },
         {
             "teksti": "kysymys 2",
             "vaihtoehdot": [{
                 "teksti": "kysymys 2 - vastaus 1",
-                "rätt": false
+                "oikein": false
             }, {
                 "teksti": "kysymys 2 - vastaus 2",
-                "rätt": false
+                "oikein": false
             }, {
                 "teksti": "kysymys 2 - vastaus 3",
-                "rätt": false
+                "oikein": false
             }, {
                 "teksti": "kysymys 2 - vastaus 4",
-                "rätt": true
+                "oikein": true
             }]
         }
     ]

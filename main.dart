@@ -34,7 +34,7 @@ lisaaVastausvaihtoehto(vaihtoehto) {
   elementti.className = 'vaihtoehto';
   elementti.text = vaihtoehto['teksti'];
   elementti.onClick.listen((e) {
-    if (vaihtoehto['rätt']) {
+    if (vaihtoehto['oikein']) {
       elementti.text = 'rätt!';
     } else {
       elementti.text = 'fel!';

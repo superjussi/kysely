@@ -3,3 +3,4 @@ app.js.map
 pubspec.lock
 .dart_tool/package_config.json
 FiTech_coding - Shortcut.lnk
+.vscode/launch.json

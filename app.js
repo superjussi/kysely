@@ -5581,7 +5581,7 @@
       var t1;
       type$.legacy_MouseEvent._as(e);
       t1 = this.elementti;
-      if (H.boolConversionCheck(H._asBoolS(J.$index$asx(this.vaihtoehto, "r\xe4tt"))))
+      if (H.boolConversionCheck(H._asBoolS(J.$index$asx(this.vaihtoehto, "oikein"))))
         C.DivElement_methods.set$text(t1, "r\xe4tt!");
       else
         C.DivElement_methods.set$text(t1, "fel!");
