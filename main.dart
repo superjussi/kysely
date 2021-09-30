@@ -34,10 +34,10 @@ lisaaVastausvaihtoehto(vaihtoehto) {
   elementti.className = 'vaihtoehto';
   elementti.text = vaihtoehto['teksti'];
   elementti.onClick.listen((e) {
-    if (vaihtoehto['oikein']) {
-      elementti.text = 'oikein!';
+    if (vaihtoehto['rätt']) {
+      elementti.text = 'rätt!';
     } else {
-      elementti.text = 'väärin!';
+      elementti.text = 'fel!';
     }
   });
   querySelector('#vastaukset').children.add(elementti);
