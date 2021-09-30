@@ -1,0 +1,4 @@
+app.js.deps
+app.js.map
+pubspec.lock
+.dart_tool/package_config.json
