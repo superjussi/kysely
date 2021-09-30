@@ -24,6 +24,7 @@ asetaKysymysteksti(teksti) {
 
 asetaVastausvaihtoehdot(vaihtoehdot) {
   querySelector('#vastaukset').children.clear();
+  vaihtoehdot.shuffle();
   for (var i = 0; i < vaihtoehdot.length; i++) {
     lisaaVastausvaihtoehto(vaihtoehdot[i]);
   }

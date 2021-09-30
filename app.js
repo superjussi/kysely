@@ -272,7 +272,8 @@
     asetaVastausvaihtoehdot(vaihtoehdot) {
       var t1, i, t2;
       J.get$children$x(document.querySelector("#vastaukset")).clear$0(0);
-      t1 = J.getInterceptor$asx(vaihtoehdot);
+      t1 = J.getInterceptor$ax(vaihtoehdot);
+      t1.shuffle$0(vaihtoehdot);
       i = 0;
       while (true) {
         t2 = H._asNumS(t1.get$length(vaihtoehdot));
