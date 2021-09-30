@@ -7,9 +7,15 @@ main() async {
   var sisalto = await HttpRequest.getString(osoite);
   var sanakirja = jsonDecode(sisalto);
   var kysymykset = sanakirja['results'];
+  kysymykset.shuffle();
+  var i = kysymykset.length - 1;
   querySelector('#seuraava').onClick.listen((e) {
-    kysymykset.shuffle();
-    asetaKysymys(kysymykset[0]);
+    //kysymykset.shuffle();
+    asetaKysymys(kysymykset[i]);
+    i--;
+    if (i == 0) {
+      i = kysymykset.length - 1;
+    }
   });
 }
 

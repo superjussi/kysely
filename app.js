@@ -241,9 +241,12 @@
   var C = {},
   F = {
     main() {
+      return F.main$body();
+    },
+    main$body() {
       var $async$goto = 0,
         $async$completer = P._makeAsyncAwaitCompleter(type$.dynamic),
-        kysymykset, t1, t2, t3, $async$temp1, $async$temp2;
+        $async$returnValue, t3, t1, kysymykset, t2, $async$temp1, $async$temp2;
       var $async$main = P._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
         if ($async$errorCode === 1)
           return P._asyncRethrow($async$result, $async$completer);
@@ -251,20 +254,32 @@
           switch ($async$goto) {
             case 0:
               // Function start
+              t1 = {};
               $async$temp1 = J;
               $async$temp2 = C.C_JsonCodec;
-              $async$goto = 2;
+              $async$goto = 3;
               return P._asyncAwait(W.HttpRequest_getString("https://opentdb.com/api.php?amount=10"), $async$main);
-            case 2:
+            case 3:
               // returning from await.
               kysymykset = $async$temp1.$index$asx($async$temp2.decode$2$reviver(0, $async$result, null), "results");
-              t1 = J.get$onClick$x(document.querySelector("#seuraava"));
-              t2 = t1.$ti;
-              t3 = t2._eval$1("~(1)?")._as(new F.main_closure(kysymykset));
+              t2 = J.getInterceptor$ax(kysymykset);
+              t2.shuffle$0(kysymykset);
+              t2 = t2.get$length(kysymykset);
+              if (typeof t2 !== "number") {
+                $async$returnValue = t2.$sub();
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              t1.i = t2 - 1;
+              t2 = J.get$onClick$x(document.querySelector("#seuraava"));
+              t3 = t2.$ti;
+              t1 = t3._eval$1("~(1)?")._as(new F.main_closure(t1, kysymykset));
               type$.nullable_void_Function._as(null);
-              W._EventStreamSubscription$(t1._target, t1._eventType, t3, false, t2._precomputed1);
-              // implicit return
-              return P._asyncReturn(null, $async$completer);
+              W._EventStreamSubscription$(t2._target, t2._eventType, t1, false, t3._precomputed1);
+            case 1:
+              // return
+              return P._asyncReturn($async$returnValue, $async$completer);
           }
       });
       return P._asyncStartSync($async$main, $async$completer);
@@ -305,8 +320,9 @@
       W._EventStreamSubscription$(elementti, "click", t3, false, t2._precomputed1);
       J.get$children$x(t1.querySelector("#vastaukset")).add$1(0, elementti);
     },
-    main_closure: function main_closure(t0) {
-      this.kysymykset = t0;
+    main_closure: function main_closure(t0, t1) {
+      this._box_0 = t0;
+      this.kysymykset = t1;
     },
     lisaaVastausvaihtoehto_closure: function lisaaVastausvaihtoehto_closure(t0, t1) {
       this.vaihtoehto = t0;
@@ -321,7 +337,7 @@
       return value;
     },
     LateError: function LateError(t0) {
-      this._message = t0;
+      this.__internal$_message = t0;
     },
     NotNullableError: function NotNullableError(t0, t1) {
       this._name = t0;
@@ -2605,7 +2621,7 @@
     _Error: function _Error() {
     },
     _TypeError: function _TypeError(t0) {
-      this.__rti$_message = t0;
+      this._message = t0;
     },
     throwLateFieldADI(fieldName) {
       return H.throwExpression(new H.LateError("Field '" + H.S(fieldName) + "' has been assigned during initialization."));
@@ -4018,7 +4034,7 @@
     },
     $index(receiver, index) {
       H._asIntS(index);
-      if (index >= receiver.length || false)
+      if (index >= receiver.length || index < 0)
         throw H.wrapException(H.diagnoseIndexError(receiver, index));
       return receiver[index];
     },
@@ -4026,7 +4042,7 @@
   };
   H.LateError.prototype = {
     toString$0(_) {
-      var t1 = "LateInitializationError: " + this._message;
+      var t1 = "LateInitializationError: " + this.__internal$_message;
       return t1;
     }
   };
@@ -4443,7 +4459,7 @@
   };
   H._Error.prototype = {
     toString$0(_) {
-      return this.__rti$_message;
+      return this._message;
     }
   };
   H._TypeError.prototype = {$isTypeError: 1};
@@ -5730,15 +5746,21 @@
   };
   F.main_closure.prototype = {
     call$1(e) {
-      var t1, t2;
+      var t1, t2, t3, t4, t5;
       type$.legacy_MouseEvent._as(e);
       t1 = this.kysymykset;
-      t2 = J.getInterceptor$ax(t1);
-      t2.shuffle$0(t1);
-      t1 = t2.$index(t1, 0);
-      t2 = J.$index$asx(t1, "question");
-      J.set$text$x(document.querySelector("#kysymys"), H._asStringS(t2));
-      F.asetaVastausvaihtoehdot(t1);
+      t2 = this._box_0;
+      t3 = J.getInterceptor$asx(t1);
+      t4 = t3.$index(t1, t2.i);
+      t5 = J.$index$asx(t4, "question");
+      J.set$text$x(document.querySelector("#kysymys"), H._asStringS(t5));
+      F.asetaVastausvaihtoehdot(t4);
+      if (--t2.i === 0) {
+        t1 = t3.get$length(t1);
+        if (typeof t1 !== "number")
+          return t1.$sub();
+        t2.i = t1 - 1;
+      }
     },
     $signature: 4
   };
